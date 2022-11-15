@@ -1,32 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMove : MonoBehaviour
 {
-    Rigidbody rigid;
-    float speed = 10f;
+    Rigidbody _rigid;
+    Camera _mainCam;
+    PlayerInput _playerInput;
+
+    Vector3 _currentDir = Vector3.zero;
+
+    [SerializeField] float _currentVelocity = 0f;
+    [SerializeField] float _speed = 10f;
+    [SerializeField] float _acceleration = 50f;
+    [SerializeField] float _deAcceleration = 50f;
+    [SerializeField] float _rotateMoveSpeed = 2f;
+
+    bool _isRun = false;
 
     private void Awake()
     {
-        rigid = GetComponent<Rigidbody>();
+        _rigid = GetComponent<Rigidbody>();
+        _playerInput = GetComponent<PlayerInput>();
+        _mainCam = Camera.main;
     }
 
     private void Update()
     {
-        Move(); 
+        Move();
+        MovementInput(_currentDir);
     }
 
     void Move()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
-
-        Vector3 moveDir = new Vector3(x, 0, z).normalized;
-        rigid.velocity = moveDir * speed;
-
-        Vector3 rotatePos = new Vector3(transform.position.x, 0, transform.position.z);
-        transform.Rotate(Vector3.Lerp(rotatePos, moveDir, 0.02f));
+        _currentDir = _playerInput.MoveInput();
+        _rigid.velocity = _currentDir * _currentVelocity;
     }
+    protected float CalculateSpeed(Vector3 movementInput)
+    {
+        if (movementInput.sqrMagnitude > 0f)
+        {
+            _currentVelocity += _acceleration * Time.deltaTime;
+        }
 
+        else
+        {
+            _currentVelocity -= _deAcceleration * Time.deltaTime;
+        }
+
+        return Mathf.Clamp(_currentVelocity, 0f, _speed);
+    }
+    public void MovementInput(Vector3 movementInput)
+    {
+        if (movementInput.sqrMagnitude > 0) // 움직이고 있을 때
+        {
+            Vector3 currentDir = _currentDir;
+            currentDir.y = 0f;
+
+            if (Vector3.Dot(currentDir, movementInput) < 0)
+            {
+                _currentVelocity = 0f;
+            }
+            _currentDir = Vector3.RotateTowards(_currentDir, movementInput, _rotateMoveSpeed * Time.deltaTime, 1000f);
+            _currentDir.Normalize();
+            RotatePlayer(_currentDir);
+        }
+        _currentVelocity = CalculateSpeed(movementInput);
+    }
+    public void RotatePlayer(Vector3 lookDir)
+    {
+        if (_currentVelocity > 0f)
+        {
+            Vector3 newForward = _rigid.velocity;
+            newForward.y = 0f;
+
+            transform.forward = Vector3.Lerp(transform.forward, newForward, _rotateMoveSpeed * Time.deltaTime);
+        }
+    }
 }
