@@ -7,6 +7,7 @@ public class PlayerInput : MonoSingleton<PlayerInput>
 {
     Vector3 _currentDir = Vector3.zero;
     public UnityEvent OnTriggerInteraction;
+    public Transform BucketTransform;
 
     private void Update()
     {

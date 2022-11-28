@@ -9,6 +9,7 @@ public class PlayerInteraction : MonoBehaviour
     public void Intraction()
     {
         if (_currentObject == null) return;
+        Debug.Log(13213213);
         _currentObject?.TriggerInteraction();
     }
 
@@ -23,7 +24,6 @@ public class PlayerInteraction : MonoBehaviour
             interactionObj.EnterInteraction();
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag(Constant.INTERACTION_TAG))
@@ -32,6 +32,5 @@ public class PlayerInteraction : MonoBehaviour
             _currentObject = null;
         }
     }
-
 
 }
