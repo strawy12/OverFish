@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerInput : MonoBehaviour
+public class PlayerInput : MonoSingleton<PlayerInput>
 {
     Vector3 _currentDir = Vector3.zero;
     public UnityEvent OnTriggerInteraction;
@@ -18,8 +18,8 @@ public class PlayerInput : MonoBehaviour
 
     public Vector3 MoveInput()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
+        float x = Input.GetAxisRaw(Constant.HORIZONTAL);
+        float z = Input.GetAxisRaw(Constant.VERTICAL);
 
         _currentDir = new Vector3(x, 0, z).normalized;
         return _currentDir;

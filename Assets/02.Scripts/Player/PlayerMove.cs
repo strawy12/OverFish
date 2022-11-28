@@ -7,7 +7,6 @@ public class PlayerMove : MonoBehaviour
 {
     Rigidbody _rigid;
     Camera _mainCam;
-    PlayerInput _playerInput;
 
     Vector3 _currentDir = Vector3.zero;
 
@@ -22,20 +21,19 @@ public class PlayerMove : MonoBehaviour
     private void Awake()
     {
         _rigid = GetComponent<Rigidbody>();
-        _playerInput = GetComponent<PlayerInput>();
         _mainCam = Camera.main;
     }
 
     private void Update()
     {
         Move();
-        MovementInput(_currentDir);
     }
 
     void Move()
     {
-        _currentDir = _playerInput.MoveInput();
+        _currentDir = PlayerInput.Inst.MoveInput();
         _rigid.velocity = _currentDir * _currentVelocity;
+        PlayerMovement(_currentDir);
     }
     protected float CalculateSpeed(Vector3 movementInput)
     {
@@ -51,7 +49,7 @@ public class PlayerMove : MonoBehaviour
 
         return Mathf.Clamp(_currentVelocity, 0f, _speed);
     }
-    public void MovementInput(Vector3 movementInput)
+    public void PlayerMovement(Vector3 movementInput)
     {
         if (movementInput.sqrMagnitude > 0) // 움직이고 있을 때
         {
@@ -64,11 +62,11 @@ public class PlayerMove : MonoBehaviour
             }
             _currentDir = Vector3.RotateTowards(_currentDir, movementInput, _rotateMoveSpeed * Time.deltaTime, 1000f);
             _currentDir.Normalize();
-            RotatePlayer(_currentDir);
+            RotatePlayer();
         }
         _currentVelocity = CalculateSpeed(movementInput);
     }
-    public void RotatePlayer(Vector3 lookDir)
+    public void RotatePlayer()
     {
         if (_currentVelocity > 0f)
         {
