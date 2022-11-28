@@ -1,22 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public abstract class InteractionObject : MonoBehaviour
 {
     [SerializeField]
-    private float _delayTime;
+    protected float _delayTime;
 
     [SerializeField]
-    private Sprite _interactionIcon;
+    protected Sprite _interactionIcon;
 
     [SerializeField]
-    private Vector3 _interactionUIOffset;
+    protected Vector3 _interactionUIOffset;
 
-    private InteractionUI _interactionUI;
+    protected InteractionUI _interactionUI;
 
-    private bool _isDelay;
+    protected bool _isDelay;
 
 
     private void Awake()
@@ -32,7 +33,7 @@ public abstract class InteractionObject : MonoBehaviour
         BindInterationUI();
     }
 
-    private void BindInterationUI()
+    protected virtual void BindInterationUI()
     {
         _interactionUI = UIManager.Inst.GetInteractionUI();
 
@@ -52,7 +53,7 @@ public abstract class InteractionObject : MonoBehaviour
 
     public virtual void ExitInteraction() { }
 
-    private IEnumerator StartDelay()
+    protected IEnumerator StartDelay()
     {
         _isDelay = true;
 
@@ -67,5 +68,9 @@ public abstract class InteractionObject : MonoBehaviour
         }
 
         _isDelay = false;
+
+        EndDelay();
     }
+
+    protected virtual void EndDelay() { }
 }
