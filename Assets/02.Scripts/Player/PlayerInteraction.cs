@@ -19,6 +19,17 @@ public class PlayerInteraction : MonoBehaviour
             InteractionObject interactionObj = other.GetComponent<InteractionObject>();
 
             _currentObject = interactionObj;
+
+            interactionObj.EnterInteraction();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag(Constant.INTERACTION_TAG))
+        {
+            _currentObject.EnterInteraction();
+            _currentObject = null;
         }
     }
 

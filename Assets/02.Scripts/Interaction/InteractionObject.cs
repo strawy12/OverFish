@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class InteractionObject : MonoBehaviour
+public abstract class InteractionObject : MonoBehaviour
 {
     [SerializeField]
     private float _delayTime;
 
     [SerializeField]
-    private Sprite _fishIcon;
-
-    [SerializeField]
-    private Sprite _baitIcon;
+    private Sprite _interactionIcon;
 
     [SerializeField]
     private Vector3 _interactionUIOffset;
@@ -20,7 +17,6 @@ public class InteractionObject : MonoBehaviour
     private InteractionUI _interactionUI;
 
     private bool _isDelay;
-    private bool isFishing;
 
 
     private void Awake()
@@ -40,37 +36,26 @@ public class InteractionObject : MonoBehaviour
     {
         _interactionUI = UIManager.Inst.GetInteractionUI();
 
-        isFishing = false;
         _interactionUI.Init();
-        _interactionUI.SetIconSprite(_baitIcon);
+        _interactionUI.SetIconSprite(_interactionIcon);
     }
 
-    public void Update()
+    public void LateUpdate()
     {
         Vector3 pos = transform.position + _interactionUIOffset;
         _interactionUI.SetPos(pos);
     }
 
+    public virtual void EnterInteraction() { }
 
-    public void TriggerInteraction()
+    public abstract void TriggerInteraction();
+
+    public virtual void ExitInteraction() { }
+
+    private IEnumerator StartDelay()
     {
-        if (_isDelay) return;
-
-        Debug.Log("Trigger");
         _isDelay = true;
 
-        isFishing = !isFishing;
-
-        if (!isFishing)
-        {
-            _interactionUI.SetIconSprite(_baitIcon);
-        }
-
-        StartCoroutine(StartDelay());
-    }
-
-    IEnumerator StartDelay()
-    {
         float currentDelcayTime = _delayTime;
         while (currentDelcayTime > 0f)
         {
@@ -79,11 +64,6 @@ public class InteractionObject : MonoBehaviour
 
             _interactionUI.SetDelayFill(fillAmount);
             yield return new WaitForEndOfFrame();
-        }
-
-        if (isFishing)
-        {
-            _interactionUI.SetIconSprite(_fishIcon);
         }
 
         _isDelay = false;
