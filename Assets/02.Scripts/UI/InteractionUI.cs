@@ -23,6 +23,11 @@ public class InteractionUI : MonoBehaviour
 
     }
 
+    public void ChangeDelayImageColor(Color color)
+    {
+        _delayImage.color = color;  
+    }
+
     public void SetIconSprite(Sprite icon)
     {
         _iconImage.sprite = icon;
@@ -43,6 +48,12 @@ public class InteractionUI : MonoBehaviour
 
     public void SetDelayFill(float fillAmount)
     {
+        if(fillAmount <= 0.01f)
+        {
+            _delayImage.fillAmount = 0f;
+            return;
+        }
+
         _delayImage.fillAmount = fillAmount;
     }
 }

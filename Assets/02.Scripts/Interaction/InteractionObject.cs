@@ -15,12 +15,15 @@ public abstract class InteractionObject : MonoBehaviour
     [SerializeField]
     protected Vector3 _interactionUIOffset;
 
+    [SerializeField]
+    protected bool notUsedIconUI;
+
     protected InteractionUI _interactionUI;
 
     protected bool _isDelay;
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (!gameObject.CompareTag(Constant.INTERACTION_TAG))
         {
@@ -28,7 +31,7 @@ public abstract class InteractionObject : MonoBehaviour
         }
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         BindInterationUI();
     }
@@ -43,6 +46,15 @@ public abstract class InteractionObject : MonoBehaviour
 
     public void LateUpdate()
     {
+        if (notUsedIconUI)
+        {
+            if(_interactionUI.gameObject.activeSelf)
+            {
+                _interactionUI.gameObject.SetActive(false);
+            }
+            return;
+        }
+
         Vector3 pos = transform.position + _interactionUIOffset;
         _interactionUI.SetPos(pos);
     }

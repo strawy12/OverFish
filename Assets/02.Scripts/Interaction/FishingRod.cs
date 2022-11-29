@@ -25,6 +25,16 @@ public class FishingRod : InteractionObject
     {
         if (_isDelay) return;
 
+        if (_hasFish)
+        {
+            Bucket bucket = Define.CurrentPlayer.currentBucket;
+
+            if (bucket == null || bucket.contain != Bucket.CONTAIN.CLEANWATER)
+            { return; }
+
+            bucket.SetContain(Bucket.CONTAIN.FISH, _fishIcon);
+        }
+
         _hasFish = !_hasFish;
 
         if (!_hasFish)
