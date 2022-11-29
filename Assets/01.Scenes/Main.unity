@@ -5951,6 +5951,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79d551bbcf558084fb4de37cc250ba07, type: 3}
+--- !u!1 &1708535449 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8857179957246342910, guid: 79d551bbcf558084fb4de37cc250ba07, type: 3}
+  m_PrefabInstance: {fileID: 1708535448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1708535450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708535449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2760508fa4accf54a81082e4c8a227d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _delayTime: 0
+  _interactionIcon: {fileID: 0}
+  _interactionUIOffset: {x: 0, y: 0, z: 0}
+  notUsedIconUI: 0
+  waterMaterial: {fileID: 0}
+  isPollution: 0
+  MaxCleaness: 100
+  curCleanessAmount: 0
+  pollution: 1
+  currentWaterColor: {r: 0, g: 0, b: 0, a: 0}
+  waterRenderer: {fileID: 0}
+  containFish: []
+  waterColors:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1872217749
 GameObject:
   m_ObjectHideFlags: 0

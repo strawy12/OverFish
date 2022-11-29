@@ -16,16 +16,18 @@ public class Aquarium : InteractionObject
     [SerializeField] private Fish[] containFish;
     [SerializeField] Color[] waterColors = new Color[4];
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         waterMaterial = waterRenderer.material;
         waterColors[0] = waterMaterial.color;
         currentWaterColor = waterColors[0];
 
         curCleanessAmount = MaxCleaness;
     }
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         StartCoroutine(Pollute());
     }
     public IEnumerator Pollute()
