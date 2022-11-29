@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Bucket : InteractionObject
@@ -22,14 +23,35 @@ public class Bucket : InteractionObject
     public STATE state = STATE.DROP;
     public CONTAIN contain = CONTAIN.NONE;
 
-    public void Awake()
+    [SerializeField]
+    private List<Color> containWaterColor;
+
+    [SerializeField]
+    private float fishDelay = 3f;
+
+
+    [SerializeField]
+    private Collider physicsCollider;
+    private Rigidbody rigid;
+    [SerializeField]
+    private MeshRenderer waterMeshRenderer;
+
+    protected override void Awake()
     {
-        gameObject.tag = Constant.INTERACTION_TAG;  
+        base.Awake();
+
+        rigid = GetComponent<Rigidbody>();
     }
-    
+
+    protected override void Start()
+    {
+        base.Start();
+
+        SetContain(contain, null);
+    }
+
     public override void TriggerInteraction()
     {
-        Debug.Log(state);
         if (state == STATE.INTERACTING)
         {
             return;
@@ -37,7 +59,12 @@ public class Bucket : InteractionObject
         else if (state == STATE.DROP)
         {
             StateChange(STATE.GRAB);
-            transform.SetParent(PlayerInput.Inst.BucketTransform);
+            transform.SetParent(Define.CurrentPlayer.bucketTrm);
+            Define.CurrentPlayer.currentBucket = this;
+
+            physicsCollider.enabled = false;
+            rigid.useGravity = false;
+            ValueChange(false);
             transform.position = transform.parent.position;
             transform.rotation = Quaternion.identity;
         }
@@ -45,10 +72,83 @@ public class Bucket : InteractionObject
         {
             StateChange(STATE.DROP);
             transform.SetParent(null);
+
+            if (Define.CurrentPlayer.currentBucket == this)
+            {
+                Define.CurrentPlayer.currentBucket = null;
+            }
+
+            ValueChange(true);
         }
     }
+
+    private void ValueChange(bool isDrop)
+    {
+        physicsCollider.enabled = isDrop;
+        rigid.useGravity = isDrop;
+        rigid.constraints = isDrop ? RigidbodyConstraints.None : RigidbodyConstraints.FreezeAll;
+    }
+
+    public void SetContain(CONTAIN contain, Sprite icon)
+    {
+        switch (contain)
+        {
+            case CONTAIN.NONE:
+                if(this.contain == CONTAIN.FISH)
+                {
+                    StopAllCoroutines();
+                    ResetFish();
+                }
+                break;
+            case CONTAIN.CLEANWATER:
+                break;
+            case CONTAIN.DIRTYWATER:
+                break;
+            case CONTAIN.FISH:
+                FishTrigger();
+                break;
+        }
+
+        this.contain = contain;
+        waterMeshRenderer.material.color = containWaterColor[(int)contain];
+        ChangeIcon(icon);
+    }
+
     public void StateChange(STATE setValue)
     {
         state = setValue;
+    }
+
+    private void ChangeIcon(Sprite icon)
+    {
+        _interactionIcon = icon;
+        _interactionUI.SetIconSprite(_interactionIcon);
+    }
+
+    private void FishTrigger()
+    {
+        _delayTime = fishDelay;
+        Color color = Color.yellow;
+        color.a = 0.5f;
+        _interactionUI.ChangeDelayImageColor(color);
+        StartCoroutine(StartDelay());
+    }
+
+    protected override void EndDelay()
+    {
+        if (contain == CONTAIN.FISH)
+        {
+            SetContain(CONTAIN.NONE, null);
+            ResetFish();
+        }
+    }
+
+    private void ResetFish()
+    {
+        _interactionUI.SetDelayFill(0f);
+
+        Color color = Color.black;
+        color.a = 0.5f;
+        _interactionUI.ChangeDelayImageColor(color);
     }
 }

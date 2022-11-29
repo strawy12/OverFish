@@ -24,15 +24,14 @@ public class PlayerMove : MonoBehaviour
         _mainCam = Camera.main;
     }
 
-    private void Update()
+    public void Move(Vector3 movement)
     {
-        Move();
-    }
+        _currentDir = movement;
 
-    void Move()
-    {
-        _currentDir = PlayerInput.Inst.MoveInput();
-        _rigid.velocity = _currentDir * _currentVelocity;
+        Vector3 velocity = _currentDir * _currentVelocity;
+        velocity.y = _rigid.velocity.y;
+
+        _rigid.velocity = velocity;
         PlayerMovement(_currentDir);
     }
     protected float CalculateSpeed(Vector3 movementInput)

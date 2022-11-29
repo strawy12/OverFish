@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerInput : MonoSingleton<PlayerInput>
+public class PlayerInput : MonoBehaviour
 {
     Vector3 _currentDir = Vector3.zero;
     public UnityEvent OnTriggerInteraction;
-    public Transform BucketTransform;
+    public UnityEvent<Vector3> OnInputMovement;
 
     private void Update()
     {
@@ -15,14 +15,16 @@ public class PlayerInput : MonoSingleton<PlayerInput>
         {
             OnTriggerInteraction?.Invoke();
         }
+
+        MoveInput();
     }
 
-    public Vector3 MoveInput()
+    public void MoveInput()
     {
         float x = Input.GetAxisRaw(Constant.HORIZONTAL);
         float z = Input.GetAxisRaw(Constant.VERTICAL);
 
         _currentDir = new Vector3(x, 0, z).normalized;
-        return _currentDir;
+        OnInputMovement?.Invoke(_currentDir);
     }
 }
