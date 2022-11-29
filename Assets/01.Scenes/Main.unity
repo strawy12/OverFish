@@ -251,6 +251,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _iconImage: {fileID: 743802784}
   _delayImage: {fileID: 1521905447}
+--- !u!23 &423144952 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8857179957624318769, guid: 79d551bbcf558084fb4de37cc250ba07, type: 3}
+  m_PrefabInstance: {fileID: 8857179956242570717}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &443870378
 GameObject:
   m_ObjectHideFlags: 0
@@ -5723,6 +5728,39 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1574790158}
   m_Mesh: {fileID: 4300000, guid: 05fa40e5fb8bce74cbeb63737cf4f7bf, type: 3}
+--- !u!1 &1588189581 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8857179957246342910, guid: 79d551bbcf558084fb4de37cc250ba07, type: 3}
+  m_PrefabInstance: {fileID: 8857179956242570717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1588189582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588189581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2760508fa4accf54a81082e4c8a227d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _delayTime: 0
+  _interactionIcon: {fileID: 0}
+  _interactionUIOffset: {x: 0, y: 0, z: 0}
+  waterMaterial: {fileID: 2100000, guid: 6a5538014f9f93a47a14f1f9132714a4, type: 2}
+  isPollution: 0
+  MaxCleaness: 100
+  curCleanessAmount: 0
+  pollution: 1
+  currentWaterColor: {r: 0, g: 0, b: 0, a: 0}
+  waterRenderer: {fileID: 423144952}
+  containFish: []
+  waterColors:
+  - {r: 0.40784314, g: 0.9411765, b: 1, a: 0.39607844}
+  - {r: 0.34456214, g: 0.79044425, b: 0.8396226, a: 0.19607843}
+  - {r: 0.28648984, g: 0.5212744, b: 0.5471698, a: 0.19607843}
+  - {r: 0.1699893, g: 0.17445345, b: 0.18867922, a: 0.19607843}
 --- !u!1 &1653514649
 GameObject:
   m_ObjectHideFlags: 0
