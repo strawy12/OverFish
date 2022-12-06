@@ -65,8 +65,7 @@ public class Bucket : InteractionObject
             physicsCollider.enabled = false;
             rigid.useGravity = false;
             ValueChange(false);
-            transform.position = transform.parent.position;
-            transform.rotation = Quaternion.identity;
+            transform.SetPositionAndRotation(transform.parent.position, Quaternion.identity);
         }
         else if (state == STATE.GRAB)
         {

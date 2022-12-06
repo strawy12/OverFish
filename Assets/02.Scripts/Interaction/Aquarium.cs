@@ -6,15 +6,19 @@ public class Aquarium : InteractionObject
 {
 
     [SerializeField] private Material waterMaterial;
-    [SerializeField] private bool isPollution = false;
-    [SerializeField] private float MaxCleaness = 100f;
-    [SerializeField] private float curCleanessAmount;
-    [SerializeField] private float pollution = 1f;
-    [SerializeField] WaitForSeconds waitPolluteTime = new WaitForSeconds(0.3f);
     [SerializeField] Color currentWaterColor;
     [SerializeField] private Renderer waterRenderer;
-    [SerializeField] private Fish[] containFish;
     [SerializeField] Color[] waterColors = new Color[4];
+
+    [SerializeField] private bool isPollution = false;
+
+    [SerializeField] private float MaxCleanness = 100f;
+    [SerializeField] private float curCleannessAmount;
+    [SerializeField] private float pollution = 1f;
+    [SerializeField] private float bucketCleannessAmount = 10f;
+    [SerializeField] WaitForSeconds waitPolluteTime = new WaitForSeconds(1f);
+
+    [SerializeField] private List<Fish> containFish;
 
     protected override void Awake()
     {
@@ -23,7 +27,7 @@ public class Aquarium : InteractionObject
         waterColors[0] = waterMaterial.color;
         currentWaterColor = waterColors[0];
 
-        curCleanessAmount = MaxCleaness;
+        curCleannessAmount = MaxCleanness;
     }
     protected override void Start()
     {
@@ -39,8 +43,8 @@ public class Aquarium : InteractionObject
             {
                 foreach (Fish fish in containFish)
                 {
-                    if (fish != null) 
-                        fish.Freshness -= pollution;
+                    if (fish != null)
+                        fish.SetFreshness(pollution, 2);
                 }
             }
             yield return waitPolluteTime;
@@ -48,14 +52,14 @@ public class Aquarium : InteractionObject
     }
     void IncreasePollution(float value)
     {
-        curCleanessAmount -= pollution;
+        SetCleanness(value, 2);
         CheckPollution();
         SetColor();
     }
 
     void SetColor()
     {
-        currentWaterColor = ((int)MaxCleaness / (int)curCleanessAmount) switch
+        currentWaterColor = ((int)MaxCleanness / (int)curCleannessAmount) switch
         {
             1 => waterColors[0],
             2 => waterColors[1],
@@ -67,7 +71,7 @@ public class Aquarium : InteractionObject
 
     public void CheckPollution()
     {
-        if (Mathf.Abs(MaxCleaness / 2) >= curCleanessAmount)
+        if (Mathf.Abs(MaxCleanness / 2) >= curCleannessAmount)
         {
             isPollution = true;
         }
@@ -76,9 +80,53 @@ public class Aquarium : InteractionObject
             isPollution = false;
         }
     }
+    /// <summary>
+    /// type 0 are Set Cleanness to Value /
+    /// type 1 are Increase Claeness to Value /
+    /// type 2 are Discrease Cleanness to Value
+    /// </summary>
+    public void SetCleanness(float value, int type)
+    {
+        switch (type)
+        {
+            case 0:
+                curCleannessAmount = value;
+                break;
+            case 1:
+                curCleannessAmount += value;
+                break;
+            case 2:
+                curCleannessAmount -= value;
+                break;
+            default:
+                break;
+        }
+    }
 
+    public Fish AddFish()
+    {
+        Fish fish = new Fish();
+        
+        return fish;
+    }
     public override void TriggerInteraction()
     {
-
+        if (Define.CurrentPlayer.currentBucket == null) 
+            return;
+        if (Define.CurrentPlayer.currentBucket.state == Bucket.STATE.GRAB)
+        {
+            switch (Define.CurrentPlayer.currentBucket.contain)
+            {
+                case Bucket.CONTAIN.CLEANWATER:
+                    SetCleanness(bucketCleannessAmount, 1);
+                    Define.CurrentPlayer.currentBucket.SetContain(Bucket.CONTAIN.DIRTYWATER, null);
+                    break;
+                case Bucket.CONTAIN.FISH:
+                    containFish.Add(AddFish());
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
