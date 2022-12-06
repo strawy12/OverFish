@@ -122,6 +122,7 @@ public class Aquarium : InteractionObject
                     Define.CurrentPlayer.currentBucket.SetContain(Bucket.CONTAIN.DIRTYWATER, null);
                     break;
                 case Bucket.CONTAIN.FISH:
+                    Define.CurrentPlayer.currentBucket.SetContain(Bucket.CONTAIN.NONE, null);
                     containFish.Add(AddFish());
                     break;
                 default:

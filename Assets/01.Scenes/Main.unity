@@ -5601,6 +5601,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aquarium
       objectReference: {fileID: 0}
+    - target: {fileID: 3612199630010087408, guid: d728dffd7fb09134687011db524b5000, type: 3}
+      propertyPath: m_TagString
+      value: Interaction
+      objectReference: {fileID: 0}
     - target: {fileID: 3612199630010087415, guid: d728dffd7fb09134687011db524b5000, type: 3}
       propertyPath: m_RootOrder
       value: 10
