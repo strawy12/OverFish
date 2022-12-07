@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Aquarium : InteractionObject
 {
 
-    [SerializeField] private Material waterMaterial;
+    [SerializeField] Material waterMaterial;
     [SerializeField] Color currentWaterColor;
-    [SerializeField] private Renderer waterRenderer;
+    [SerializeField] Renderer waterRenderer;
     [SerializeField] Color[] waterColors = new Color[4];
 
     [SerializeField] private bool isPollution = false;
@@ -47,6 +49,7 @@ public class Aquarium : InteractionObject
                         fish.SetFreshness(pollution, 2);
                 }
             }
+            SetUI();
             yield return waitPolluteTime;
         }
     }
@@ -57,7 +60,12 @@ public class Aquarium : InteractionObject
         SetColor();
     }
 
-    void SetColor()
+    public void SetUI()
+    {
+        cleannessSlider.value = curCleannessAmount;
+    }
+
+    public void SetColor()
     {
         currentWaterColor = ((int)MaxCleanness / (int)curCleannessAmount) switch
         {
@@ -106,12 +114,12 @@ public class Aquarium : InteractionObject
     public Fish AddFish()
     {
         Fish fish = new Fish();
-        
+
         return fish;
     }
     public override void TriggerInteraction()
     {
-        if (Define.CurrentPlayer.currentBucket == null) 
+        if (Define.CurrentPlayer.currentBucket == null)
             return;
         if (Define.CurrentPlayer.currentBucket.state == Bucket.STATE.GRAB)
         {

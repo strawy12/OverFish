@@ -5597,6 +5597,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3612199629779191133, guid: d728dffd7fb09134687011db524b5000, type: 3}
+      propertyPath: notUsedIconUI
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3612199629779191133, guid: d728dffd7fb09134687011db524b5000, type: 3}
+      propertyPath: cleannessSlider
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3612199629779191133, guid: d728dffd7fb09134687011db524b5000, type: 3}
+      propertyPath: _interactionIcon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3612199629779191133, guid: d728dffd7fb09134687011db524b5000, type: 3}
+      propertyPath: _interactionUIOffset.x
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3612199629779191133, guid: d728dffd7fb09134687011db524b5000, type: 3}
+      propertyPath: _interactionUIOffset.y
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3612199630010087408, guid: d728dffd7fb09134687011db524b5000, type: 3}
       propertyPath: m_Name
       value: Aquarium
