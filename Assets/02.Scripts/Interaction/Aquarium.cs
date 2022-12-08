@@ -62,7 +62,7 @@ public class Aquarium : InteractionObject
 
     public void SetUI()
     {
-        cleannessSlider.value = curCleannessAmount;
+
     }
 
     public void SetColor()
