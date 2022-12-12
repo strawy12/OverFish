@@ -57,6 +57,11 @@ public class DataManager : MonoSingleton<DataManager>
         File.WriteAllText(SAVE_PATH + SAVE_FILE, data);
     }
 
+    public UpgradeData FindUpgradeData(EUpgradeDataType type)
+    {
+        return playerData.upgradeDataList.Find(x => x.dataType == type);
+    }
+
     private void OnDestroy()
     {
         SaveToJson();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanelChanger : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class PanelChanger : MonoBehaviour
     private List<PanelButton> panelBtns = new List<PanelButton>();
     [SerializeField]
     private List<UpgradePanelContent> contents = new List<UpgradePanelContent>();
+
+    [SerializeField]
+    private ScrollRect scrollRect;
 
     private UpgradePanelContent currentContent;
 
@@ -31,11 +35,19 @@ public class PanelChanger : MonoBehaviour
         {
             if (c == content) continue;
 
+            c.canvasGroup.alpha = 0f;
+            c.canvasGroup.blocksRaycasts = false;
+            c.canvasGroup.interactable = false;
             c.gameObject.SetActive(false);
         }
 
+        content.canvasGroup.alpha = 1f;
+        content.canvasGroup.blocksRaycasts = true;
+        content.canvasGroup.interactable = true;
         content.gameObject.SetActive(true);
 
         currentContent = content;
+
+        scrollRect.content = currentContent.rectTransform;
     }
 }

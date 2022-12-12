@@ -10,7 +10,7 @@ using static Constant;
 public enum EPanelType
 {
     None = -1,
-    Equipment,
+    Tool,
     Upgrade,
     Fix,
 }
