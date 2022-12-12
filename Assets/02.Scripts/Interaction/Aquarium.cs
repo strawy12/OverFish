@@ -11,11 +11,12 @@ public class Aquarium : InteractionObject
     [SerializeField] Color currentWaterColor;
     [SerializeField] Renderer waterRenderer;
     [SerializeField] Color[] waterColors = new Color[4];
+    [SerializeField] HpBar HPBAR;
 
     [SerializeField] private bool isPollution = false;
 
     [SerializeField] private float MaxCleanness = 100f;
-    [SerializeField] private float curCleannessAmount;
+    [SerializeField] private float curCleanness;
     [SerializeField] private float pollution = 1f;
     [SerializeField] private float bucketCleannessAmount = 10f;
     [SerializeField] WaitForSeconds waitPolluteTime = new WaitForSeconds(1f);
@@ -25,11 +26,13 @@ public class Aquarium : InteractionObject
     protected override void Awake()
     {
         base.Awake();
+        HPBAR = GetComponent<HpBar>();
+
         waterMaterial = waterRenderer.material;
         waterColors[0] = waterMaterial.color;
         currentWaterColor = waterColors[0];
 
-        curCleannessAmount = MaxCleanness;
+        curCleanness = MaxCleanness;
     }
     protected override void Start()
     {
@@ -62,12 +65,12 @@ public class Aquarium : InteractionObject
 
     public void SetUI()
     {
-
+        HPBAR.Setsize(MaxCleanness, curCleanness, pollution, 2);
     }
 
     public void SetColor()
     {
-        currentWaterColor = ((int)MaxCleanness / (int)curCleannessAmount) switch
+        currentWaterColor = ((int)MaxCleanness / (int)curCleanness) switch
         {
             1 => waterColors[0],
             2 => waterColors[1],
@@ -79,7 +82,7 @@ public class Aquarium : InteractionObject
 
     public void CheckPollution()
     {
-        if (Mathf.Abs(MaxCleanness / 2) >= curCleannessAmount)
+        if (Mathf.Abs(MaxCleanness / 2) >= curCleanness)
         {
             isPollution = true;
         }
@@ -98,13 +101,13 @@ public class Aquarium : InteractionObject
         switch (type)
         {
             case 0:
-                curCleannessAmount = value;
+                curCleanness = value;
                 break;
             case 1:
-                curCleannessAmount += value;
+                curCleanness += value;
                 break;
             case 2:
-                curCleannessAmount -= value;
+                curCleanness -= value;
                 break;
             default:
                 break;
