@@ -9,6 +9,7 @@ public class GameManager : MonoSingleton<GameManager>
         TITLE,
         GAME,
         UPGRADE,
+        RESULT,
     }
     private GAMESTATE state;
     public GAMESTATE STATE
@@ -26,9 +27,11 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
     }
+
     [SerializeField] GameObject TitleCanvas;
     [SerializeField] GameObject GameCanvas;
     [SerializeField] GameObject UpgradeCanvas;
+    [SerializeField] GameObject ResultCanvas;
     public void OnStateChanged()
     {
         if (state == GAMESTATE.TITLE)
@@ -36,18 +39,28 @@ public class GameManager : MonoSingleton<GameManager>
             TitleCanvas.SetActive(true);
             GameCanvas.SetActive(false);
             UpgradeCanvas.SetActive(false);
+            ResultCanvas.SetActive(false);
         }
         else if (state == GAMESTATE.GAME)
         {
             TitleCanvas.SetActive(false);
             GameCanvas.SetActive(true);
             UpgradeCanvas.SetActive(false);
+            ResultCanvas.SetActive(false);
         }
         else if (state == GAMESTATE.UPGRADE)
         {
             TitleCanvas.SetActive(false);
             GameCanvas.SetActive(false);
             UpgradeCanvas.SetActive(true);
+            ResultCanvas.SetActive(false);
+        }
+        else if (state == GAMESTATE.RESULT)
+        {
+            TitleCanvas.SetActive(false);
+            GameCanvas.SetActive(false);
+            UpgradeCanvas.SetActive(false);
+            ResultCanvas.SetActive(true);
         }
     }
 }
