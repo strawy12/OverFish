@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    public enum GAMESTATE
+    public enum STATE
     {
         TITLE,
         GAME,
         UPGRADE,
         RESULT,
     }
-    private GAMESTATE state;
-    public GAMESTATE STATE
+    private STATE state = STATE.TITLE;
+    public STATE CURRENTSTATE
     {
         get
         {
@@ -34,28 +34,28 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] GameObject ResultCanvas;
     public void OnStateChanged()
     {
-        if (state == GAMESTATE.TITLE)
+        if (state == STATE.TITLE)
         {
             TitleCanvas.SetActive(true);
             GameCanvas.SetActive(false);
             UpgradeCanvas.SetActive(false);
             ResultCanvas.SetActive(false);
         }
-        else if (state == GAMESTATE.GAME)
+        else if (state == STATE.GAME)
         {
             TitleCanvas.SetActive(false);
             GameCanvas.SetActive(true);
             UpgradeCanvas.SetActive(false);
             ResultCanvas.SetActive(false);
         }
-        else if (state == GAMESTATE.UPGRADE)
+        else if (state == STATE.UPGRADE)
         {
             TitleCanvas.SetActive(false);
             GameCanvas.SetActive(false);
             UpgradeCanvas.SetActive(true);
             ResultCanvas.SetActive(false);
         }
-        else if (state == GAMESTATE.RESULT)
+        else if (state == STATE.RESULT)
         {
             TitleCanvas.SetActive(false);
             GameCanvas.SetActive(false);
@@ -63,4 +63,5 @@ public class GameManager : MonoSingleton<GameManager>
             ResultCanvas.SetActive(true);
         }
     }
+
 }
