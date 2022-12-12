@@ -22,7 +22,6 @@ public class PanelChanger : MonoBehaviour
             EPanelType type = btn.PanelType;
 
            UpgradePanelContent content = contents.Find(x => x.panelType == type);
-
             btn.OnSelected += () => OnClickPanelBtn(content);
         }
     }
