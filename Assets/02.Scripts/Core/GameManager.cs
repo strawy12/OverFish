@@ -6,12 +6,13 @@ public class GameManager : MonoSingleton<GameManager>
 {
     public enum STATE
     {
+        NONE,
         TITLE,
         GAME,
-        UPGRADE,
         RESULT,
+        UPGRADE,
     }
-    private STATE state = STATE.TITLE;
+    private STATE state = STATE.NONE;
     public STATE CURRENTSTATE
     {
         get
@@ -27,11 +28,15 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
     }
-
     [SerializeField] GameObject TitleCanvas;
     [SerializeField] GameObject GameCanvas;
     [SerializeField] GameObject UpgradeCanvas;
     [SerializeField] GameObject ResultCanvas;
+    private void Start()
+    {
+        CURRENTSTATE = STATE.TITLE;
+    }
+
     public void OnStateChanged()
     {
         if (state == STATE.TITLE)
@@ -63,5 +68,20 @@ public class GameManager : MonoSingleton<GameManager>
             ResultCanvas.SetActive(true);
         }
     }
+    public void GameOver()
+    {
+        CURRENTSTATE = STATE.RESULT;
 
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            CURRENTSTATE++;
+            if (CURRENTSTATE > STATE.RESULT)
+            {
+                CURRENTSTATE = 0;
+            }
+        }
+    }
 }

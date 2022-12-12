@@ -16,7 +16,8 @@ public class Aquarium : InteractionObject
     [SerializeField] private bool isPollution = false;
 
     [SerializeField] private float MaxCleanness = 100f;
-    [SerializeField] private float curCleanness;
+    [SerializeField] private float cleannessAmount = 0f;
+    [SerializeField] private float curCleanness { get { return cleannessAmount; } set { cleannessAmount = Mathf.Clamp(value, 0f, MaxCleanness); } }
     [SerializeField] private float pollution = 1f;
     [SerializeField] private float bucketCleannessAmount = 10f;
     [SerializeField] WaitForSeconds waitPolluteTime = new WaitForSeconds(1f);
