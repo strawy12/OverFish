@@ -32,6 +32,15 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] GameObject GameCanvas;
     [SerializeField] GameObject UpgradeCanvas;
     [SerializeField] GameObject ResultCanvas;
+
+    [SerializeField] float maxTime;
+    float currentTimer;
+
+    private void Start()
+    {
+        StartTimer();
+    }
+
     public void OnStateChanged()
     {
         if (state == STATE.TITLE)
@@ -61,6 +70,23 @@ public class GameManager : MonoSingleton<GameManager>
             GameCanvas.SetActive(false);
             UpgradeCanvas.SetActive(false);
             ResultCanvas.SetActive(true);
+        }
+    }
+
+    public void StartTimer()
+    {
+        currentTimer = maxTime;
+        StopAllCoroutines();
+        StartCoroutine(TimerCoroutine());
+    }
+
+    private IEnumerator TimerCoroutine()
+    {
+        while (currentTimer > 0f)
+        {
+            UIManager.Inst.ChangeTimePanelAmount(currentTimer/maxTime);
+            currentTimer -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
     }
 
