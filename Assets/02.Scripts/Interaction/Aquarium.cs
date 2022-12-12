@@ -21,7 +21,7 @@ public class Aquarium : InteractionObject
     [SerializeField] private float bucketCleannessAmount = 10f;
     [SerializeField] WaitForSeconds waitPolluteTime = new WaitForSeconds(1f);
 
-    [SerializeField] private List<Fish> containFish;
+    [SerializeField] public List<Fish> containFish;
 
     protected override void Awake()
     {

@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class Fish : FishCalculate
 {
     [SerializeField] private float freshness = 100f;
     public float fishHeight;
     public float fishWeight;
     [SerializeField] Sprite fishIcon;
-    [SerializeField] float price;
+    public float price;
 
     bool isDead = false;
 
@@ -62,6 +61,5 @@ public class Fish : FishCalculate
     void Dead()
     {
         isDead = true;
-        
     }
 }
