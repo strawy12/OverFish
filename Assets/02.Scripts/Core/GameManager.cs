@@ -30,8 +30,8 @@ public class GameManager : MonoSingleton<GameManager>
     }
     [SerializeField] GameObject TitleCanvas;
     [SerializeField] GameObject GameCanvas;
-    [SerializeField] GameObject UpgradeCanvas;
     [SerializeField] GameObject ResultCanvas;
+    [SerializeField] GameObject UpgradeCanvas;
     private void Start()
     {
         CURRENTSTATE = STATE.TITLE;
@@ -80,7 +80,7 @@ public class GameManager : MonoSingleton<GameManager>
             CURRENTSTATE++;
             if (CURRENTSTATE > STATE.RESULT)
             {
-                CURRENTSTATE = 0;
+                CURRENTSTATE = STATE.TITLE;
             }
         }
     }
