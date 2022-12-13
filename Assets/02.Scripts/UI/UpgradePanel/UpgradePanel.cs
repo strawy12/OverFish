@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public class UpgradePanel : MonoBehaviour
 {
     [SerializeField]
     private EUpgradeDataType dataType;
-    private UpgradeData currentData;
+    protected UpgradeData currentData;
 
     [SerializeField]
     private Text dataNameText;
@@ -22,11 +23,16 @@ public class UpgradePanel : MonoBehaviour
     [SerializeField]
     private Button upgradeBtn;
 
+    [SerializeField]
+    protected int maxLevel = 10;
+
+    private Coroutine delayCo;
+
     private void Awake()
     {
         Init();
     }
-    public void Init()
+    public virtual void Init()
     {
         UpgradeDataSO dataSO = Resources.Load<UpgradeDataSO>(string.Format("{0:00}_UpgradeData", (int)dataType));
         currentData = DataManager.Inst.FindUpgradeData(dataType);
@@ -39,7 +45,7 @@ public class UpgradePanel : MonoBehaviour
         ChangeValue();
     }
 
-    public void ChangeValue()
+    public virtual void ChangeValue()
     {
         if (dataType == EUpgradeDataType.BaitCount)
         {
@@ -47,7 +53,8 @@ public class UpgradePanel : MonoBehaviour
         }
         else if(dataType == EUpgradeDataType.ChargeOil)
         {
-            levelText.text = $"{currentData.level}L";
+            UpgradeData maxOilData = DataManager.Inst.FindUpgradeData(EUpgradeDataType.MaxOilAmount);
+            levelText.text = $"{currentData.level % (Constant.DEFAULT_MAX_OIL_COUNT + maxOilData.level)}L";
         }
         else
         {
@@ -56,10 +63,18 @@ public class UpgradePanel : MonoBehaviour
         goldText.text = currentData.gold.ToString();
     }
 
-    public void UpgradeData()
+    public virtual void UpgradeData()
     {
+        if (maxLevel != 0 && maxLevel < currentData.level)
+        {
+            goldText.text = "최대레벨";
+            Debug.Log("최대레벨");
+            return;
+        }
         if (DataManager.Inst.CurrentPlayer.gold < currentData.gold)
         {
+            if (delayCo != null) return;
+            delayCo =StartCoroutine(NotBuyDelay());
             Debug.Log("돈 부족");
             return;
         }
@@ -68,5 +83,15 @@ public class UpgradePanel : MonoBehaviour
         ChangeValue();
     }
 
-
+    private IEnumerator NotBuyDelay()
+    {
+        string text = goldText.text;
+        Color color = goldText.color;
+        goldText.color = Color.red;
+        goldText.text = "돈 부족";
+        yield return new WaitForSeconds(0.75f);
+        goldText.text = text;
+        goldText.color = color;
+        delayCo = null;
+    }
 }

@@ -28,6 +28,11 @@ public class InteractionUI : MonoBehaviour
         _delayImage.color = color;  
     }
 
+    public void ChangeIconImageColor(Color color)
+    {
+        _iconImage.color = color;
+    }
+
     public void SetIconSprite(Sprite icon)
     {
         _iconImage.sprite = icon;
