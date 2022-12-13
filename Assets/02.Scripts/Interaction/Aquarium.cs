@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Aquarium : InteractionObject
 {
-
+    private float cleannessAmount = 0f;
     [SerializeField] Material waterMaterial;
     [SerializeField] Color currentWaterColor;
     [SerializeField] Renderer waterRenderer;
@@ -14,20 +14,19 @@ public class Aquarium : InteractionObject
     [SerializeField] HpBar HPBAR;
 
     [SerializeField] private bool isPollution = false;
-
     [SerializeField] private float MaxCleanness = 100f;
-    [SerializeField] private float cleannessAmount = 0f;
     [SerializeField] private float curCleanness { get { return cleannessAmount; } set { cleannessAmount = Mathf.Clamp(value, 0f, MaxCleanness); } }
     [SerializeField] private float pollution = 1f;
     [SerializeField] private float bucketCleannessAmount = 10f;
     [SerializeField] WaitForSeconds waitPolluteTime = new WaitForSeconds(1f);
 
-    [SerializeField] public List<Fish> containFish;
+    public List<Fish> containFish;
 
     protected override void Awake()
     {
         base.Awake();
         HPBAR = GetComponent<HpBar>();
+        containFish = new List<Fish>();
 
         waterMaterial = waterRenderer.material;
         waterColors[0] = waterMaterial.color;

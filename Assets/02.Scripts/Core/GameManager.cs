@@ -12,7 +12,23 @@ public class GameManager : MonoSingleton<GameManager>
         RESULT,
         UPGRADE,
     }
-    private STATE state = STATE.NONE;
+    private STATE state = STATE.GAME;
+    bool settingOn = false;
+    public bool SettingOn
+    {
+        get
+        {
+            return settingOn;
+        }
+        set
+        {
+            if (settingOn != value)
+            {
+                settingOn = value;
+                OnSettingCanvas();
+            }
+        }
+    }
     public STATE CURRENTSTATE
     {
         get
@@ -32,41 +48,73 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] GameObject GameCanvas;
     [SerializeField] GameObject ResultCanvas;
     [SerializeField] GameObject UpgradeCanvas;
+    [SerializeField] GameObject settingCanvas;
     private void Start()
     {
         CURRENTSTATE = STATE.TITLE;
     }
-
+    public void ChangeState()
+    {
+        CURRENTSTATE++;
+        if (CURRENTSTATE > STATE.RESULT)
+        {
+            CURRENTSTATE = STATE.TITLE;
+        }
+    }
     public void OnStateChanged()
     {
         if (state == STATE.TITLE)
         {
-            TitleCanvas.SetActive(true);
-            GameCanvas.SetActive(false);
-            UpgradeCanvas.SetActive(false);
-            ResultCanvas.SetActive(false);
+            OnTitleCanvas();
         }
         else if (state == STATE.GAME)
         {
-            TitleCanvas.SetActive(false);
-            GameCanvas.SetActive(true);
-            UpgradeCanvas.SetActive(false);
-            ResultCanvas.SetActive(false);
+            OnGameCanvas();
         }
         else if (state == STATE.UPGRADE)
         {
-            TitleCanvas.SetActive(false);
-            GameCanvas.SetActive(false);
-            UpgradeCanvas.SetActive(true);
-            ResultCanvas.SetActive(false);
+            OnUpgradeCanvas();
         }
         else if (state == STATE.RESULT)
         {
-            TitleCanvas.SetActive(false);
-            GameCanvas.SetActive(false);
-            UpgradeCanvas.SetActive(false);
-            ResultCanvas.SetActive(true);
+            OnResultCanvas();
         }
+    }
+    public void OnTitleCanvas()
+    {
+        TitleCanvas.SetActive(true);
+        GameCanvas.SetActive(false);
+        UpgradeCanvas.SetActive(false);
+        ResultCanvas.SetActive(false);
+    }
+    public void OnGameCanvas()
+    {
+        TitleCanvas.SetActive(false);
+        GameCanvas.SetActive(true);
+        UpgradeCanvas.SetActive(false);
+        ResultCanvas.SetActive(false);
+    }
+    public void OnUpgradeCanvas()
+    {
+        TitleCanvas.SetActive(false);
+        GameCanvas.SetActive(false);
+        UpgradeCanvas.SetActive(true);
+        ResultCanvas.SetActive(false);
+    }
+    public void OnResultCanvas()
+    {
+        TitleCanvas.SetActive(false);
+        GameCanvas.SetActive(false);
+        UpgradeCanvas.SetActive(false);
+        ResultCanvas.SetActive(true);
+    }
+    public void ChangeSettingOn()
+    {
+        SettingOn = !SettingOn;
+    }
+    public void OnSettingCanvas()
+    {
+        settingCanvas.SetActive(SettingOn);
     }
     public void GameOver()
     {
@@ -77,11 +125,8 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            CURRENTSTATE++;
-            if (CURRENTSTATE > STATE.RESULT)
-            {
-                CURRENTSTATE = STATE.TITLE;
-            }
+            foreach (Fish fish in FindObjectOfType<Aquarium>().containFish)
+                Debug.Log($"Price: {fish.price}");
         }
     }
 }
