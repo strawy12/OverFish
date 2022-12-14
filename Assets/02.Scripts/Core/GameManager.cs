@@ -71,6 +71,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void OnStateChanged()
     {
+        SoundManager.Inst.TurnScene(CURRENTSTATE);
         if (state == STATE.TITLE)
         {
             OnTitleCanvas();
