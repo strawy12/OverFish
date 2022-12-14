@@ -10,5 +10,7 @@ public static class Constant
     public const string VERTICAL = "Vertical";
     public const string BEGIN_DRAG_PANELBUTTONS = "BDPBS";
 
-    public const int MAX_UPGRADE_LEVEL = 50;
+    public const int DEFAULT_MAX_OIL_COUNT = 10;
+    
+
 }

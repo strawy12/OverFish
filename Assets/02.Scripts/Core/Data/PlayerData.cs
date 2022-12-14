@@ -5,11 +5,11 @@ using UnityEngine;
 public enum EUpgradeDataType
 {
     None = -1,
-    FishRodPower,
-    FishRodCount,
+    FishRodPower, // 0
+    FishRodCount, // 1
 
     BucketPower,
-    BucketCount,
+    BucketCount, // 3
 
     AquariumPower,
     AquariumFishCount,
@@ -42,6 +42,18 @@ public class PlayerData
 {
     public List<UpgradeData> upgradeDataList;
     public int gold;
+    public int BaitCount
+    {
+        get
+        {
+            return upgradeDataList.Find(x => x.dataType == EUpgradeDataType.BaitCount).level;
+        }
+        set
+        {
+            upgradeDataList.Find(x => x.dataType == EUpgradeDataType.BaitCount).level = value;
+            UIManager.Inst.SetBaitText();
+        }
+    }
 
     public PlayerData()
     {

@@ -18,4 +18,7 @@ public static class Define
             return currentPlayer;
         }
     }
+
+    public static Vector3 MAX_POS => new Vector3(20f, 2.5f,4f);
+    public static Vector3 MIN_POS => new Vector3(-9.5f, 2.5f, -11f);
 }

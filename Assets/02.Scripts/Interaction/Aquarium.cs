@@ -20,7 +20,7 @@ public class Aquarium : InteractionObject
     [SerializeField] private float curCleanness { get { return cleannessAmount; } set { cleannessAmount = Mathf.Clamp(value, 0f, MaxCleanness); } }
     [SerializeField] private float pollution = 1f;
     [SerializeField] private float bucketCleannessAmount = 10f;
-    [SerializeField] WaitForSeconds waitPolluteTime = new WaitForSeconds(1f);
+     private float polluteDelay = 1f;
 
     [SerializeField] public List<Fish> containFish;
 
@@ -54,7 +54,9 @@ public class Aquarium : InteractionObject
                 }
             }
             SetUI();
-            yield return waitPolluteTime;
+
+            float delay = polluteDelay + DataManager.Inst.FindUpgradeData(EUpgradeDataType.AquariumPower).level * 0.5f;
+            yield return new WaitForSeconds(delay);
         }
     }
     void IncreasePollution(float value)
@@ -134,6 +136,12 @@ public class Aquarium : InteractionObject
                     Define.CurrentPlayer.currentBucket.SetContain(Bucket.CONTAIN.DIRTYWATER, null);
                     break;
                 case Bucket.CONTAIN.FISH:
+                    if(DataManager.Inst.FindUpgradeData(EUpgradeDataType.AquariumFishCount).level < containFish.Count)
+                    {
+                        Debug.Log("최대 물고기");
+                        return;
+                    }
+
                     Define.CurrentPlayer.currentBucket.SetContain(Bucket.CONTAIN.NONE, null);
                     containFish.Add(AddFish());
                     break;

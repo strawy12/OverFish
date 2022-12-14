@@ -32,9 +32,13 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] GameObject GameCanvas;
     [SerializeField] GameObject UpgradeCanvas;
     [SerializeField] GameObject ResultCanvas;
+    [SerializeField] float defaultOilTime;
+    float maxOilTime;
+    float currentOilTimer;
     private void Start()
     {
         CURRENTSTATE = STATE.TITLE;
+        StartOilTimer();
     }
 
     public void OnStateChanged()
@@ -84,4 +88,22 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
     }
+    public void StartOilTimer()
+    {
+        maxOilTime = defaultOilTime + DataManager.Inst.FindUpgradeData(EUpgradeDataType.MaxOilAmount).level * 10;
+        currentOilTimer = maxOilTime;
+        StopAllCoroutines();
+        StartCoroutine(OilTimerCoroutine());
+    }
+
+    private IEnumerator OilTimerCoroutine()
+    {
+        while (currentOilTimer > 0f)
+        {
+            UIManager.Inst.ChangeTimePanelAmount(currentOilTimer / maxOilTime);
+            currentOilTimer -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class Bucket : InteractionObject
@@ -93,7 +92,7 @@ public class Bucket : InteractionObject
         switch (contain)
         {
             case CONTAIN.NONE:
-                if(this.contain == CONTAIN.FISH)
+                if (this.contain == CONTAIN.FISH)
                 {
                     StopAllCoroutines();
                     ResetFish();
@@ -121,16 +120,29 @@ public class Bucket : InteractionObject
     private void ChangeIcon(Sprite icon)
     {
         _interactionIcon = icon;
+        if (contain == CONTAIN.FISH)
+        {
+            _interactionUI.ChangeIconImageColor(Color.white);
+        }
+        else if(contain == CONTAIN.NONE)
+        {
+            _interactionUI.ChangeIconImageColor(new Color(0,0,0,0));
+        }
+        else
+        {
+            Color color = containWaterColor[(int)contain];
+            color.a = 1f;
+            _interactionUI.ChangeIconImageColor(color);
+        }
         _interactionUI.SetIconSprite(_interactionIcon);
     }
 
     private void FishTrigger()
     {
-        _delayTime = fishDelay;
         Color color = Color.yellow;
         color.a = 0.5f;
         _interactionUI.ChangeDelayImageColor(color);
-        StartCoroutine(StartDelay());
+        StartDelay(fishDelay);
     }
 
     protected override void EndDelay()

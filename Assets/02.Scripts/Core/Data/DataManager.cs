@@ -37,7 +37,7 @@ public class DataManager : MonoSingleton<DataManager>
 
     private void LoadFromJson()
     {
-        CreatePlayerData();
+       // CreatePlayerData();
         return;
         if (File.Exists(SAVE_PATH + SAVE_FILE))
         {
