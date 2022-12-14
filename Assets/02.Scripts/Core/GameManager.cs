@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,7 +61,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void ChangeState()
     {
         CURRENTSTATE++;
-        if (CURRENTSTATE > STATE.RESULT)
+        if (CURRENTSTATE > STATE.UPGRADE)
         {
             CURRENTSTATE = STATE.TITLE;
         }
@@ -123,7 +124,6 @@ public class GameManager : MonoSingleton<GameManager>
     public void GameOver()
     {
         CURRENTSTATE = STATE.RESULT;
-
     }
     private void Update()
     {
@@ -131,6 +131,10 @@ public class GameManager : MonoSingleton<GameManager>
         {
             foreach (Fish fish in FindObjectOfType<Aquarium>().containFish)
                 Debug.Log($"Price: {fish.price}");
+        }
+        if (CURRENTSTATE == STATE.RESULT && Input.GetKeyDown(KeyCode.Space))
+        {
+            ChangeState();
         }
     }
     public void StartOilTimer()
@@ -149,6 +153,7 @@ public class GameManager : MonoSingleton<GameManager>
             currentOilTimer -= Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+        GameOver();
     }
 
 }

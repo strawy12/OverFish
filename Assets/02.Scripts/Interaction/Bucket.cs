@@ -51,7 +51,7 @@ public class Bucket : InteractionObject
 
     public override void TriggerInteraction()
     {
-        if (Define.CurrentPlayer.currentBucket == null || Define.CurrentPlayer.currentBucket != this || state == STATE.INTERACTING) return;
+        if ((Define.CurrentPlayer.currentBucket != null && Define.CurrentPlayer.currentBucket != this) || state == STATE.INTERACTING) return;
         else if (state == STATE.DROP)
         {
             StateChange(STATE.GRAB);

@@ -38,4 +38,6 @@ public class UIManager : MonoSingleton<UIManager>
     {
         baitText.text = $"Gold: {DataManager.Inst.CurrentPlayer.gold}";
     }
+
+
 }

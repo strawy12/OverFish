@@ -15,7 +15,6 @@ public class PlayerInput : MonoBehaviour
         {
             OnTriggerInteraction?.Invoke();
         }
-
         MoveInput();
     }
 
