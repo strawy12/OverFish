@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FishingRod : InteractionObject
@@ -10,21 +11,30 @@ public class FishingRod : InteractionObject
     private Sprite _fishIcon;
 
     [SerializeField]
-    private Sprite _lureIcon;
+    private Sprite _baitIcon;
+
+    private float _fishDelay = 15f;
+    private float _baitDelay = 5f;
+
+    [SerializeField]
+    private float _fishFreshDelay = 5f;
 
     private bool _hasFish;
+    private bool _startFreshTimer = false;
 
     protected override void BindInterationUI()
     {
+        _startFreshTimer = false;
         _hasFish = false;
-        _interactionIcon = _lureIcon;
         base.BindInterationUI();
+        ChangeIcon(_baitIcon);
     }
 
     public override void TriggerInteraction()
     {
-        if (_isDelay) return;
+        if (_isDelay && !_startFreshTimer) return;
 
+        float delayTime = 0;
         if (_hasFish)
         {
             Bucket bucket = Define.CurrentPlayer.currentBucket;
@@ -33,16 +43,26 @@ public class FishingRod : InteractionObject
             { return; }
 
             bucket.SetContain(Bucket.CONTAIN.FISH, _fishIcon);
+            _hasFish = false;
+            ChangeIcon(_baitIcon);
+             delayTime = _baitDelay - DataManager.Inst.FindUpgradeData(EUpgradeDataType.BaitPower).level * 0.5f;
         }
 
-        _hasFish = !_hasFish;
-
-        if (!_hasFish)
+        else if (!_hasFish)
         {
-            ChangeIcon(_lureIcon);
+            if (DataManager.Inst.CurrentPlayer.BaitCount <= 0)
+            {
+                Debug.Log("¹Ì³¢ ºÎÁ·");
+                return;
+            }
+
+            DataManager.Inst.CurrentPlayer.BaitCount--;
+            _hasFish = true;
+            delayTime = _fishDelay - DataManager.Inst.FindUpgradeData(EUpgradeDataType.FishRodPower).level * 0.5f;
         }
 
-        StartCoroutine(StartDelay());
+        _interactionUI.ChangeDelayImageColor(new Color(1f, 1f, 1f, 0.5f));
+        StartDelay(delayTime);
     }
 
     protected override void EndDelay()
@@ -50,6 +70,20 @@ public class FishingRod : InteractionObject
         if (_hasFish)
         {
             ChangeIcon(_fishIcon);
+
+            if(!_startFreshTimer)
+            {
+                _startFreshTimer = true;
+                _interactionUI.ChangeDelayImageColor(new Color(1f,1f, 0f, 0.5f));
+                StartDelay(_fishFreshDelay);
+            }
+
+            else
+            {
+                _startFreshTimer = false;
+                _hasFish = false;
+                ChangeIcon(_baitIcon);
+            }
         }
     }
 

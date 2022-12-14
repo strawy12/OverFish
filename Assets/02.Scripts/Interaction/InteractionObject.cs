@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class InteractionObject : MonoBehaviour
 {
     [SerializeField]
-    protected float _delayTime;
+    private float _delayTime;
 
     [SerializeField]
     protected Sprite _interactionIcon;
@@ -65,7 +65,13 @@ public abstract class InteractionObject : MonoBehaviour
 
     public virtual void ExitInteraction() { }
 
-    protected IEnumerator StartDelay()
+    protected void StartDelay(float delay)
+    {
+        _delayTime = delay;
+        StopAllCoroutines();
+        StartCoroutine(StartDelay());
+    }
+    private IEnumerator StartDelay()
     {
         _isDelay = true;
 
