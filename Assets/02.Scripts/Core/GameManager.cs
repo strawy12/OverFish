@@ -75,7 +75,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void StartOilTimer()
     {
-        currentOilTimer = maxOilTime;
+        currentOilTimer = maxOilTime + DataManager.Inst.FindUpgradeData(EUpgradeDataType.MaxOilAmount).level * 10;
         StopAllCoroutines();
         StartCoroutine(OilTimerCoroutine());
     }

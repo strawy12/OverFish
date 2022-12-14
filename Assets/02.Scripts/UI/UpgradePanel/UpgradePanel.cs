@@ -83,7 +83,7 @@ public class UpgradePanel : MonoBehaviour
         ChangeValue();
     }
 
-    private IEnumerator NotBuyDelay()
+    private IEnumerator NotBuyDelay(Vector2? v = null)
     {
         string text = goldText.text;
         Color color = goldText.color;
