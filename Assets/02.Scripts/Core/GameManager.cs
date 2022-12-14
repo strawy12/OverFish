@@ -33,7 +33,8 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] GameObject UpgradeCanvas;
     [SerializeField] GameObject ResultCanvas;
 
-    [SerializeField] float maxOilTime;
+    [SerializeField] float defaultOilTime;
+    float maxOilTime;
     float currentOilTimer;
 
     private void Start()
@@ -75,7 +76,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void StartOilTimer()
     {
-        currentOilTimer = maxOilTime + DataManager.Inst.FindUpgradeData(EUpgradeDataType.MaxOilAmount).level * 10;
+        maxOilTime = defaultOilTime + DataManager.Inst.FindUpgradeData(EUpgradeDataType.MaxOilAmount).level * 10;
+        currentOilTimer = maxOilTime;
         StopAllCoroutines();
         StartCoroutine(OilTimerCoroutine());
     }
