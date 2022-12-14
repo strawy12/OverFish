@@ -370,7 +370,7 @@ MonoBehaviour:
   _interactionUIOffset: {x: -1, y: 3.5, z: 0}
   notUsedIconUI: 0
   state: 0
-  contain: 2
+  contain: 0
   containWaterColor:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0.40784314, g: 0.9411765, b: 1, a: 0.20784314}

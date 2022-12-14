@@ -10,11 +10,12 @@ public class BucketCreator : MonoBehaviour
 
     private void Start()
     {
-        CreateBucket();
+        GameManager.Inst.GameStart += CreateBucket;
     }
 
     private void CreateBucket()
     {
+        DestroyBucket();
         int count = DataManager.Inst.FindUpgradeData(EUpgradeDataType.BucketCount).level;
 
         for(int i = 0; i < count; i++)
@@ -30,5 +31,16 @@ public class BucketCreator : MonoBehaviour
             bucket.transform.position = pos;
             bucketList.Add(bucket);
         }
+    }
+
+    private void DestroyBucket()
+    {
+        foreach(var bucket in bucketList)
+        {
+            Destroy(bucket.interactionUI.gameObject);
+            Destroy(bucket.gameObject);
+        }
+
+        bucketList.Clear();
     }
 }

@@ -92,4 +92,17 @@ public class FishingRod : InteractionObject
         _interactionIcon = icon;
         _interactionUI.SetIconSprite(_interactionIcon);
     }
+
+    private void OnEnable()
+    {
+        if (_interactionUI = null) return;
+        _interactionUI?.gameObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        if (_interactionUI = null) return;
+        _interactionUI?.gameObject.SetActive(false);
+    }
+
 }

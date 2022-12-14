@@ -15,7 +15,11 @@ public class HpBar : MonoBehaviour
     {
         maxHPTrs = maxHPBar.rectTransform;
         curHPTrs = curHPBar.rectTransform;
+        Init();
+    }
 
+    public void Init()
+    {
         curHPTrs.sizeDelta = maxHPTrs.sizeDelta;
     }
     public void Setsize(float maxValue, float curValue, float setValue, int type)

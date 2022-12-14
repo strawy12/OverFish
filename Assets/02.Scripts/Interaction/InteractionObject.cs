@@ -18,7 +18,8 @@ public abstract class InteractionObject : MonoBehaviour
     [SerializeField]
     protected bool notUsedIconUI;
 
-    protected InteractionUI _interactionUI;
+    protected InteractionUI _interactionUI = null;
+    public InteractionUI interactionUI => _interactionUI;
 
     protected bool _isDelay;
 

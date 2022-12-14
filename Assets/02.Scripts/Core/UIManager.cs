@@ -17,6 +17,13 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private Text baitText;
 
+    private void Start()
+    {
+        GameManager.Inst.GameStart += SetBaitText;
+        GameManager.Inst.GameStart += SetGoldText;
+    }
+
+
     public InteractionUI GetInteractionUI()
     {
        return Instantiate(_interactionUITemp, _interactionUITemp.transform.parent);

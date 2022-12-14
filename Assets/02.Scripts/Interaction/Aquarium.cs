@@ -28,17 +28,28 @@ public class Aquarium : InteractionObject
         HPBAR = GetComponent<HpBar>();
         containFish = new List<Fish>();
 
+
+    }
+    protected override void Start()
+    {
+        base.Start();
+
+        GameManager.Inst.GameStart += GameStart;
+    }
+
+    public void GameStart()
+    {
         waterMaterial = waterRenderer.material;
         waterColors[0] = waterMaterial.color;
         currentWaterColor = waterColors[0];
 
         curCleanness = MaxCleanness;
-    }
-    protected override void Start()
-    {
-        base.Start();
+
+        HPBAR.Init();
+
         StartCoroutine(Pollute());
     }
+
     public IEnumerator Pollute()
     {
         while (true)

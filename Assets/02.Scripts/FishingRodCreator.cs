@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 
 public class FishingRodCreator : MonoBehaviour
@@ -9,8 +10,7 @@ public class FishingRodCreator : MonoBehaviour
 
     private void Start()
     {
-        // EventManager.StartListening("GameStart", (a) => CreateFishRod());
-        ShowFishRod();
+        GameManager.Inst.GameStart += ShowFishRod;
     }
 
     private void ShowFishRod()

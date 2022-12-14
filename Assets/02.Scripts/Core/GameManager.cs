@@ -53,10 +53,13 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] float defaultOilTime;
     float maxOilTime;
     float currentOilTimer;
+
+    public Action GameStart;
+
     private void Start()
     {
         CURRENTSTATE = STATE.TITLE;
-        StartOilTimer();
+        GameStart += StartOilTimer;
     }
     public void ChangeState()
     {
@@ -94,10 +97,13 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void OnGameCanvas()
     {
+        GameStart?.Invoke();
+
         TitleCanvas.SetActive(false);
         GameCanvas.SetActive(true);
         UpgradeCanvas.SetActive(false);
         ResultCanvas.SetActive(false);
+
     }
     public void OnUpgradeCanvas()
     {
