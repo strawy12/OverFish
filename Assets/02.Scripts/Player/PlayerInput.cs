@@ -15,6 +15,10 @@ public class PlayerInput : MonoBehaviour
         {
             OnTriggerInteraction?.Invoke();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Inst.OnSettingCanvas();
+        }
         MoveInput();
     }
 

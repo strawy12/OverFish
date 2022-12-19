@@ -4,42 +4,54 @@ using UnityEngine;
 
 public class SoundManager : MonoSingleton<SoundManager>
 {
-    public AudioSource titleBGMSource;
-    public AudioClip titleBGMClip;
+    public AudioSource BGMSource;
+    public AudioSource soundSource;
+    [Header("0 TITLE BGM / 1 GAME BGM")]
+    public AudioClip[] BGMAudioClips;
+    [Header("0 FISHING SOUND / 1 THROWROD / 2 INCLUDING WATER / 3 DECLUDING WATER")]
+    public AudioClip[] EffectAudioClips;
 
-    public AudioSource bgmSource;
-    public AudioClip bgmClip;
-
-    public AudioSource audioSources;
-    public AudioClip[] audioClips;
+    public enum BGM
+    {
+        TITLE,
+        GAME
+    }
+    public enum EFFECT
+    {
+        FISHING,
+        THROWROD,
+        INCLUDEINGWATER,
+        DECLUDINGWATER,
+    }
 
     private void Awake()
     {
-        titleBGMSource.playOnAwake = true;
-        titleBGMSource.loop = true;
+        BGMSource.playOnAwake = true;
+        BGMSource.loop = true;
     }
-    void TurnAudio(AudioSource source, bool turn)
+    public void TurnAudio(BGM bgm)
     {
-        if (turn)
-        {
-            source.Play();
-        }
+        BGMSource.clip = BGMAudioClips[(int)bgm];
+        BGMSource.Play();
+    }
+    public void TurnAudio(EFFECT effect)
+    {
+        soundSource.clip = EffectAudioClips[(int)effect];
+        soundSource.Play();
+    }
+    
+    public void TurnScene(GameManager.STATE state)
+    {
+        BGM bgm = ChangeEnum(state);
+        if (BGMSource.clip == BGMAudioClips[(int)bgm]) return;
         else
         {
-            source.Stop();
+            TurnAudio(bgm);
         }
     }
-    public void TurnScene(GameManager.STATE curState)
+    private BGM ChangeEnum(GameManager.STATE state) => state switch
     {
-        if (curState == GameManager.STATE.TITLE)
-        {
-            TurnAudio(titleBGMSource, false);
-            TurnAudio(bgmSource, true);
-        }
-        else
-        {
-            if (!bgmSource.isPlaying)
-                TurnAudio(bgmSource, true);
-        }
-    }
+        GameManager.STATE.GAME => BGM.GAME,
+        _ => BGM.TITLE
+    };
 }

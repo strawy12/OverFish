@@ -13,7 +13,7 @@ public class GameManager : MonoSingleton<GameManager>
         RESULT,
         UPGRADE,
     }
-    private STATE state = STATE.GAME;
+    public STATE state = STATE.NONE;
     bool settingOn = false;
     public bool SettingOn
     {
@@ -43,6 +43,7 @@ public class GameManager : MonoSingleton<GameManager>
                 state = value;
                 OnStateChanged();
             }
+
         }
     }
     [SerializeField] GameObject TitleCanvas;
@@ -58,16 +59,12 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
-        CURRENTSTATE = STATE.TITLE;
+        OnTitleCanvas();
         GameStart += StartOilTimer;
     }
-    public void ChangeState()
+    public void SetState(STATE state)
     {
-        CURRENTSTATE++;
-        if (CURRENTSTATE > STATE.UPGRADE)
-        {
-            CURRENTSTATE = STATE.TITLE;
-        }
+        CURRENTSTATE = state;
     }
     public void OnStateChanged()
     {
@@ -91,6 +88,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void OnTitleCanvas()
     {
+        SetState(STATE.TITLE);
         TitleCanvas.SetActive(true);
         GameCanvas.SetActive(false);
         UpgradeCanvas.SetActive(false);
@@ -100,6 +98,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         GameStart?.Invoke();
 
+        SetState(STATE.GAME);
         TitleCanvas.SetActive(false);
         GameCanvas.SetActive(true);
         UpgradeCanvas.SetActive(false);
@@ -108,6 +107,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void OnUpgradeCanvas()
     {
+        SetState(STATE.UPGRADE);
         TitleCanvas.SetActive(false);
         GameCanvas.SetActive(false);
         UpgradeCanvas.SetActive(true);
@@ -115,6 +115,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void OnResultCanvas()
     {
+        SetState(STATE.RESULT);
         TitleCanvas.SetActive(false);
         GameCanvas.SetActive(false);
         UpgradeCanvas.SetActive(false);
@@ -130,6 +131,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void GameOver()
     {
+        Calculate.Inst.GameOver();
         CURRENTSTATE = STATE.RESULT;
     }
     private void Update()
@@ -140,8 +142,8 @@ public class GameManager : MonoSingleton<GameManager>
                 Debug.Log($"Price: {fish.price}");
         }
         if (CURRENTSTATE == STATE.RESULT && Input.GetKeyDown(KeyCode.Space))
-        {
-            ChangeState();
+        {            
+            SetState(STATE.UPGRADE);
         }
     }
     public void StartOilTimer()

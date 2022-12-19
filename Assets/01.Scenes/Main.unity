@@ -18183,6 +18183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e39289d6dca7b54ea8fe579487e68c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   TitleCanvas: {fileID: 36804652}
   GameCanvas: {fileID: 856351744}
   ResultCanvas: {fileID: 1732801352}

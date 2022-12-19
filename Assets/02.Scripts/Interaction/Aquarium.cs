@@ -83,13 +83,8 @@ public class Aquarium : InteractionObject
 
     public void SetColor()
     {
-        currentWaterColor = ((int)MaxCleanness / (int)curCleanness) switch
-        {
-            1 => waterColors[0],
-            2 => waterColors[1],
-            3 => waterColors[2],
-            _ => waterColors[3]
-        };
+        int i =(int)(MaxCleanness / curCleanness * 4);
+        currentWaterColor = waterColors[i];
         waterMaterial.color = currentWaterColor;
     }
 

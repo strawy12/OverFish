@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Calculate : MonoBehaviour
+public class Calculate : MonoSingleton<Calculate>
 {
     [SerializeField] List<Fish> fishs;
-    [SerializeField] float result = 0f;
+    public float result = 0f;
     void SearchFishs()
     {
         fishs = FindObjectOfType<Aquarium>().containFish;
@@ -18,5 +19,10 @@ public class Calculate : MonoBehaviour
             result += fish.price * (fish.Freshness / 100);
         }
         return result;
+    }
+
+    public void GameOver()
+    {
+
     }
 }
