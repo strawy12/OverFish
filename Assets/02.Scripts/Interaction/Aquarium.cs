@@ -39,6 +39,7 @@ public class Aquarium : InteractionObject
 
     public void GameStart()
     {
+        containFish.Clear();
         waterMaterial = waterRenderer.material;
         waterColors[0] = waterMaterial.color;
         currentWaterColor = waterColors[0];
@@ -46,6 +47,7 @@ public class Aquarium : InteractionObject
         curCleanness = MaxCleanness;
 
         HPBAR.Init();
+        UIManager.Inst.SetAquariumText(0);
 
         StartCoroutine(Pollute());
     }
@@ -149,6 +151,8 @@ public class Aquarium : InteractionObject
 
                     Define.CurrentPlayer.currentBucket.SetContain(Bucket.CONTAIN.NONE, null);
                     containFish.Add(AddFish());
+
+                    UIManager.Inst.SetAquariumText(containFish.Count);
                     break;
                 default:
                     break;

@@ -12,15 +12,15 @@ public class UIManager : MonoSingleton<UIManager>
     private RectTransform timePanelRectTrm;
 
     [SerializeField]
+    private Text baitText;
+    [SerializeField]
     private Text goldText;
 
     [SerializeField]
-    private Text baitText;
-
+    private Text aquariumFishText;
     private void Start()
     {
         GameManager.Inst.GameStart += SetBaitText;
-        GameManager.Inst.GameStart += SetGoldText;
     }
 
 
@@ -39,12 +39,15 @@ public class UIManager : MonoSingleton<UIManager>
     {
         int baitCnt = DataManager.Inst.FindUpgradeData(EUpgradeDataType.BaitCount).level;
         baitText.text = $"Bait: {baitCnt}"; 
-    }
-
+    }    
+    public void SetAquariumText(int fishCnt)
+    {
+        int cnt = DataManager.Inst.FindUpgradeData(EUpgradeDataType.AquariumFishCount).level;
+        aquariumFishText.text = $"Fish: {fishCnt} / {cnt}"; 
+    }    
+    
     public void SetGoldText()
     {
-        baitText.text = $"Gold: {DataManager.Inst.CurrentPlayer.gold}";
+        goldText.text = $"Gold: {DataManager.Inst.CurrentPlayer.gold}"; 
     }
-
-
 }

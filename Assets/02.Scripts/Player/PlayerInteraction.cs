@@ -7,6 +7,12 @@ public class PlayerInteraction : MonoBehaviour
 {
     private InteractionObject _currentObject;
     private Dictionary<GameObject, InteractionObject> _enterInteractionList = new Dictionary<GameObject, InteractionObject>();
+
+    private void Start()
+    {
+        GameManager.Inst.GameStart += () => _enterInteractionList.Clear();
+    }
+
     public void Intraction()
     {
         if (_currentObject == null) return;

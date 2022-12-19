@@ -34,6 +34,7 @@ public abstract class InteractionObject : MonoBehaviour
 
     protected virtual void Start()
     {
+        GameManager.Inst.GameStart += () => _interactionUI?.SetDelayFill(0f);
         BindInterationUI();
     }
 

@@ -56,19 +56,26 @@ public class GameManager : MonoSingleton<GameManager>
     float currentOilTimer;
 
     public Action GameStart;
+    public Action GameEnd;
 
     private void Start()
     {
         OnTitleCanvas();
         GameStart += StartOilTimer;
     }
+<<<<<<< HEAD
     public void SetState(STATE state)
     {
         CURRENTSTATE = state;
+=======
+    public void ChangeState(int state)
+    {
+        CURRENTSTATE = (STATE)state;
+>>>>>>> 66d81520de046612291e1a63c14206f6f8e631bd
     }
     public void OnStateChanged()
     {
-        SoundManager.Inst.TurnScene(CURRENTSTATE);
+        //SoundManager.Inst.TurnScene(CURRENTSTATE);
         if (state == STATE.TITLE)
         {
             OnTitleCanvas();
@@ -103,11 +110,14 @@ public class GameManager : MonoSingleton<GameManager>
         GameCanvas.SetActive(true);
         UpgradeCanvas.SetActive(false);
         ResultCanvas.SetActive(false);
-
     }
     public void OnUpgradeCanvas()
     {
+<<<<<<< HEAD
         SetState(STATE.UPGRADE);
+=======
+        UIManager.Inst.SetGoldText();
+>>>>>>> 66d81520de046612291e1a63c14206f6f8e631bd
         TitleCanvas.SetActive(false);
         GameCanvas.SetActive(false);
         UpgradeCanvas.SetActive(true);
@@ -133,6 +143,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Calculate.Inst.GameOver();
         CURRENTSTATE = STATE.RESULT;
+        GameEnd?.Invoke();
     }
     private void Update()
     {
@@ -142,8 +153,13 @@ public class GameManager : MonoSingleton<GameManager>
                 Debug.Log($"Price: {fish.price}");
         }
         if (CURRENTSTATE == STATE.RESULT && Input.GetKeyDown(KeyCode.Space))
+<<<<<<< HEAD
         {            
             SetState(STATE.UPGRADE);
+=======
+        {
+            CURRENTSTATE = (STATE.UPGRADE);
+>>>>>>> 66d81520de046612291e1a63c14206f6f8e631bd
         }
     }
     public void StartOilTimer()
