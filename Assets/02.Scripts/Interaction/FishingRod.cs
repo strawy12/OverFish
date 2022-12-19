@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using UnityEngine;
 
@@ -22,11 +23,19 @@ public class FishingRod : InteractionObject
     private bool _hasFish;
     private bool _startFreshTimer = false;
 
-    protected override void BindInterationUI()
+    private void Init()
     {
         _startFreshTimer = false;
         _hasFish = false;
+        ChangeIcon(_baitIcon);
+    }
+
+    protected override void BindInterationUI()
+    {
+        GameManager.Inst.GameStart += Init;
         base.BindInterationUI();
+        _startFreshTimer = false;
+        _hasFish = false;
         ChangeIcon(_baitIcon);
     }
 
@@ -45,7 +54,7 @@ public class FishingRod : InteractionObject
             bucket.SetContain(Bucket.CONTAIN.FISH, _fishIcon);
             _hasFish = false;
             ChangeIcon(_baitIcon);
-             delayTime = _baitDelay - DataManager.Inst.FindUpgradeData(EUpgradeDataType.BaitPower).level * 0.5f;
+            delayTime = _baitDelay - DataManager.Inst.FindUpgradeData(EUpgradeDataType.BaitPower).level * 0.5f;
         }
 
         else if (!_hasFish)
@@ -57,6 +66,7 @@ public class FishingRod : InteractionObject
             }
 
             DataManager.Inst.CurrentPlayer.BaitCount--;
+
             _hasFish = true;
             delayTime = _fishDelay - DataManager.Inst.FindUpgradeData(EUpgradeDataType.FishRodPower).level * 0.5f;
         }
@@ -71,10 +81,10 @@ public class FishingRod : InteractionObject
         {
             ChangeIcon(_fishIcon);
 
-            if(!_startFreshTimer)
+            if (!_startFreshTimer)
             {
                 _startFreshTimer = true;
-                _interactionUI.ChangeDelayImageColor(new Color(1f,1f, 0f, 0.5f));
+                _interactionUI.ChangeDelayImageColor(new Color(1f, 1f, 0f, 0.5f));
                 StartDelay(_fishFreshDelay);
             }
 
@@ -95,14 +105,13 @@ public class FishingRod : InteractionObject
 
     private void OnEnable()
     {
-        if (_interactionUI = null) return;
+        if (_interactionUI == null) return;
         _interactionUI?.gameObject.SetActive(true);
     }
 
     private void OnDisable()
     {
-        if (_interactionUI = null) return;
+        if (_interactionUI == null) return;
         _interactionUI?.gameObject.SetActive(false);
     }
-
 }

@@ -11,6 +11,9 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Inst.CURRENTSTATE != GameManager.STATE.GAME)
+            return;
+
         if(Input.GetKeyDown(KeyCode.Space))
         {
             OnTriggerInteraction?.Invoke();

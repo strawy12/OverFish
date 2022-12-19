@@ -64,7 +64,12 @@ public class PlayerData
             upgradeDataList.Add(new UpgradeData(type));
         }
 
-        gold = 100;
+        upgradeDataList[(int)EUpgradeDataType.BaitCount].level = 25;
+        upgradeDataList[(int)EUpgradeDataType.BaitCount].gold = 10;
+        upgradeDataList[(int)EUpgradeDataType.AquariumFishCount].level = 5; 
+        upgradeDataList[(int)EUpgradeDataType.FishRodCount].level = 1;
+
+        gold = 500;
     }
 
     public void UpgradeAmount(EUpgradeDataType type)

@@ -55,23 +55,20 @@ public class GameManager : MonoSingleton<GameManager>
     float currentOilTimer;
 
     public Action GameStart;
+    public Action GameEnd;
 
     private void Start()
     {
         CURRENTSTATE = STATE.TITLE;
         GameStart += StartOilTimer;
     }
-    public void ChangeState()
+    public void ChangeState(int state)
     {
-        CURRENTSTATE++;
-        if (CURRENTSTATE > STATE.UPGRADE)
-        {
-            CURRENTSTATE = STATE.TITLE;
-        }
+        CURRENTSTATE = (STATE)state;
     }
     public void OnStateChanged()
     {
-        SoundManager.Inst.TurnScene(CURRENTSTATE);
+        //SoundManager.Inst.TurnScene(CURRENTSTATE);
         if (state == STATE.TITLE)
         {
             OnTitleCanvas();
@@ -104,10 +101,10 @@ public class GameManager : MonoSingleton<GameManager>
         GameCanvas.SetActive(true);
         UpgradeCanvas.SetActive(false);
         ResultCanvas.SetActive(false);
-
     }
     public void OnUpgradeCanvas()
     {
+        UIManager.Inst.SetGoldText();
         TitleCanvas.SetActive(false);
         GameCanvas.SetActive(false);
         UpgradeCanvas.SetActive(true);
@@ -131,6 +128,7 @@ public class GameManager : MonoSingleton<GameManager>
     public void GameOver()
     {
         CURRENTSTATE = STATE.RESULT;
+        GameEnd?.Invoke();
     }
     private void Update()
     {
@@ -141,7 +139,7 @@ public class GameManager : MonoSingleton<GameManager>
         }
         if (CURRENTSTATE == STATE.RESULT && Input.GetKeyDown(KeyCode.Space))
         {
-            ChangeState();
+            CURRENTSTATE = (STATE.UPGRADE);
         }
     }
     public void StartOilTimer()

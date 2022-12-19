@@ -80,6 +80,7 @@ public class UpgradePanel : MonoBehaviour
         }
 
         DataManager.Inst.CurrentPlayer.UpgradeAmount(dataType);
+        UIManager.Inst.SetGoldText();
         ChangeValue();
     }
 
