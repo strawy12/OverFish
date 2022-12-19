@@ -63,15 +63,9 @@ public class GameManager : MonoSingleton<GameManager>
         OnTitleCanvas();
         GameStart += StartOilTimer;
     }
-<<<<<<< HEAD
-    public void SetState(STATE state)
-    {
-        CURRENTSTATE = state;
-=======
     public void ChangeState(int state)
     {
         CURRENTSTATE = (STATE)state;
->>>>>>> 66d81520de046612291e1a63c14206f6f8e631bd
     }
     public void OnStateChanged()
     {
@@ -95,7 +89,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void OnTitleCanvas()
     {
-        SetState(STATE.TITLE);
+        ChangeState((int)STATE.TITLE);
         TitleCanvas.SetActive(true);
         GameCanvas.SetActive(false);
         UpgradeCanvas.SetActive(false);
@@ -105,7 +99,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         GameStart?.Invoke();
 
-        SetState(STATE.GAME);
+        ChangeState((int)STATE.GAME);
         TitleCanvas.SetActive(false);
         GameCanvas.SetActive(true);
         UpgradeCanvas.SetActive(false);
@@ -113,11 +107,8 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void OnUpgradeCanvas()
     {
-<<<<<<< HEAD
-        SetState(STATE.UPGRADE);
-=======
+        ChangeState((int)STATE.UPGRADE);
         UIManager.Inst.SetGoldText();
->>>>>>> 66d81520de046612291e1a63c14206f6f8e631bd
         TitleCanvas.SetActive(false);
         GameCanvas.SetActive(false);
         UpgradeCanvas.SetActive(true);
@@ -125,7 +116,7 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void OnResultCanvas()
     {
-        SetState(STATE.RESULT);
+        ChangeState((int)STATE.RESULT);
         TitleCanvas.SetActive(false);
         GameCanvas.SetActive(false);
         UpgradeCanvas.SetActive(false);
@@ -141,7 +132,6 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void GameOver()
     {
-        Calculate.Inst.GameOver();
         CURRENTSTATE = STATE.RESULT;
         GameEnd?.Invoke();
     }
@@ -153,13 +143,11 @@ public class GameManager : MonoSingleton<GameManager>
                 Debug.Log($"Price: {fish.price}");
         }
         if (CURRENTSTATE == STATE.RESULT && Input.GetKeyDown(KeyCode.Space))
-<<<<<<< HEAD
-        {            
-            SetState(STATE.UPGRADE);
-=======
         {
-            CURRENTSTATE = (STATE.UPGRADE);
->>>>>>> 66d81520de046612291e1a63c14206f6f8e631bd
+            ChangeState((int)STATE.UPGRADE);
+            {
+                CURRENTSTATE = STATE.UPGRADE;
+            }
         }
     }
     public void StartOilTimer()
