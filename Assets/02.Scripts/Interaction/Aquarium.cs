@@ -85,7 +85,8 @@ public class Aquarium : InteractionObject
 
     public void SetColor()
     {
-        int i =(int)(MaxCleanness / curCleanness * 4);
+        int i = (int)(MaxCleanness / curCleanness / 25);
+        Debug.Log(i);
         currentWaterColor = waterColors[i];
         waterMaterial.color = currentWaterColor;
     }

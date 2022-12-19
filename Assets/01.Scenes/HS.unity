@@ -1365,7 +1365,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb2a5a8354178b47ae9f266949a585f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  result: 0
 --- !u!114 &244416835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1444,8 +1443,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactionUITemp: {fileID: 1109974845}
   timePanelRectTrm: {fileID: 1149573017}
-  goldText: {fileID: 549350240}
   baitText: {fileID: 972717251}
+  goldText: {fileID: 549350240}
+  aquariumFishText: {fileID: 0}
 --- !u!4 &244416838
 Transform:
   m_ObjectHideFlags: 0
@@ -1475,7 +1475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGMSource: {fileID: 1320992103}
-  SoundSource: {fileID: 1423887691}
+  soundSource: {fileID: 1423887691}
   BGMAudioClips:
   - {fileID: 8300000, guid: ce84b763f8ba81a498a8dad7ce75d388, type: 3}
   - {fileID: 8300000, guid: d3927b0217e34ec42851e02cda2167f8, type: 3}
