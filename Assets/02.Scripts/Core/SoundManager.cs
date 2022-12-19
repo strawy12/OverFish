@@ -34,23 +34,27 @@ public class SoundManager : MonoSingleton<SoundManager>
         BGMSource.loop = true;
 
         BGMSlider.maxValue = BGMSource.maxDistance = 100f;
-        BGMSlider.value = BGMSource.volume = 100f;
+        BGMSlider.value = PlayerPrefs.GetFloat("BGMSOUND", 100f);
+        BGMSource.volume = Mathf.Lerp(0f, 0.5f, BGMSlider.value / BGMSlider.maxValue);
         BGMSlider.minValue = BGMSource.minDistance = 0f;
         effectSlider.maxValue = soundSource.maxDistance = 100f;
-        effectSlider.value = soundSource.volume = 100f;
-        effectSlider.value = soundSource.volume = 100f;
+        effectSlider.value = PlayerPrefs.GetFloat("FXSOUND", 100f);
+        soundSource.volume = effectSlider.value / effectSlider.maxValue;
         effectSlider.minValue = soundSource.minDistance = 0f;
 
-        
         TurnAudio(BGM.TITLE);
     }
     public void SetBGMVolume()
     {
-        BGMSource.volume = BGMSlider.value;
+        BGMSource.volume = Mathf.Lerp(0f, 0.5f, BGMSlider.value / BGMSlider.maxValue);
+
+        PlayerPrefs.SetFloat("BGMSOUND", BGMSlider.value);
     }
     public void SetFXVolume()
     {
-        soundSource.volume = effectSlider.value;
+        soundSource.volume = effectSlider.value / effectSlider.maxValue;
+
+        PlayerPrefs.SetFloat("FXSOUND", effectSlider.value);
     }
     public void TurnAudio(BGM bgm)
     {
@@ -62,7 +66,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         soundSource.clip = EffectAudioClips[(int)effect];
         soundSource.Play();
     }
-    
+
     public void TurnScene(GameManager.STATE state)
     {
         BGM bgm = ChangeEnum(state);

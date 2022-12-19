@@ -141,10 +141,12 @@ public class Aquarium : InteractionObject
             {
                 case Bucket.CONTAIN.CLEANWATER:
                     SetCleanness(bucketCleannessAmount, 1);
+                    SoundManager.Inst.TurnAudio(SoundManager.EFFECT.INCLUDEINGWATER);
                     Define.CurrentPlayer.currentBucket.SetContain(Bucket.CONTAIN.DIRTYWATER, null);
                     break;
                 case Bucket.CONTAIN.FISH:
-                    if(DataManager.Inst.FindUpgradeData(EUpgradeDataType.AquariumFishCount).level < containFish.Count)
+                    SoundManager.Inst.TurnAudio(SoundManager.EFFECT.DECLUDINGWATER);
+                    if (DataManager.Inst.FindUpgradeData(EUpgradeDataType.AquariumFishCount).level < containFish.Count)
                     {
                         Debug.Log("최대 물고기");
                         return;
