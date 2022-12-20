@@ -1680,13 +1680,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1872217749}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1872217753}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: GameQuit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4004,7 +4004,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 583384171}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1872217753}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ChangeSettingOn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &583384171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11790,7 +11802,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!224 &918565846
 RectTransform:
@@ -13390,7 +13402,6 @@ GameObject:
   - component: {fileID: 1105370877}
   - component: {fileID: 1105370879}
   - component: {fileID: 1105370878}
-  - component: {fileID: 1105370880}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -13459,27 +13470,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1105370876}
   m_CullTransparentMesh: 1
---- !u!223 &1105370880
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1105370876}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 2
-  m_TargetDisplay: 0
 --- !u!1 &1127764314
 GameObject:
   m_ObjectHideFlags: 0
@@ -16999,7 +16989,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1872217753}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: OnSettingCanvas
+        m_MethodName: ChangeSettingOn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19183,13 +19173,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e39289d6dca7b54ea8fe579487e68c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
+  state: 2
   TitleCanvas: {fileID: 36804652}
   GameCanvas: {fileID: 856351744}
   ResultCanvas: {fileID: 1732801352}
   UpgradeCanvas: {fileID: 1493357885}
   settingCanvas: {fileID: 918565842}
-  defaultOilTime: 180
+  defaultOilTime: 30
 --- !u!114 &1872217754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19456,7 +19446,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

@@ -54,7 +54,9 @@ public class FishingRod : InteractionObject
             bucket.SetContain(Bucket.CONTAIN.FISH, _fishIcon);
             _hasFish = false;
             ChangeIcon(_baitIcon);
+            SoundManager.Inst.TurnAudio(SoundManager.EFFECT.FISHING);
             delayTime = _baitDelay - DataManager.Inst.FindUpgradeData(EUpgradeDataType.BaitPower).level * 0.5f;
+            _startFreshTimer = false;
         }
 
         else if (!_hasFish)
@@ -68,6 +70,7 @@ public class FishingRod : InteractionObject
             DataManager.Inst.CurrentPlayer.BaitCount--;
 
             _hasFish = true;
+            SoundManager.Inst.TurnAudio(SoundManager.EFFECT.THROWROD);
             delayTime = _fishDelay - DataManager.Inst.FindUpgradeData(EUpgradeDataType.FishRodPower).level * 0.5f;
         }
 

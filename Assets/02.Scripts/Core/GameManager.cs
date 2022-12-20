@@ -27,6 +27,7 @@ public class GameManager : MonoSingleton<GameManager>
             {
                 settingOn = value;
                 OnSettingCanvas();
+                Time.timeScale = settingOn ? 0f : 1f;
             }
         }
     }
@@ -124,9 +125,10 @@ public class GameManager : MonoSingleton<GameManager>
     }
     public void ChangeSettingOn()
     {
-        SettingOn = !SettingOn;
-        
+        SettingOn = !settingOn;
+
     }
+
     public void OnSettingCanvas()
     {
         settingCanvas.SetActive(SettingOn);
@@ -170,4 +172,8 @@ public class GameManager : MonoSingleton<GameManager>
         GameOver();
     }
 
+    public void GameQuit()
+    {
+        Application.Quit();
+    }
 }
