@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class PlayerMove : MonoBehaviour
 {
     Rigidbody _rigid;
+    Animator _anim;
     Camera _mainCam;
 
     Vector3 _currentDir = Vector3.zero;
@@ -21,6 +22,7 @@ public class PlayerMove : MonoBehaviour
     private void Awake()
     {
         _rigid = GetComponent<Rigidbody>();
+        _anim = GetComponent<Animator>();
         _mainCam = Camera.main;
     }
 
@@ -62,6 +64,11 @@ public class PlayerMove : MonoBehaviour
             _currentDir = Vector3.RotateTowards(_currentDir, movementInput, _rotateMoveSpeed * Time.deltaTime, 1000f);
             _currentDir.Normalize();
             RotatePlayer();
+            _anim.SetBool("isRun", true);
+        }
+        else
+        {
+            _anim.SetBool("isRun", false);
         }
         _currentVelocity = CalculateSpeed(movementInput);
     }
