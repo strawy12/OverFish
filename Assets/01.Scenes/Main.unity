@@ -1730,36 +1730,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204999392}
   m_CullTransparentMesh: 1
---- !u!1 &210000596
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 210000597}
-  m_Layer: 0
-  m_Name: BucketPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &210000597
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 210000596}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 0.3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 677654687}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &220501291
 GameObject:
   m_ObjectHideFlags: 0
@@ -4790,11 +4760,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675564291}
   m_CullTransparentMesh: 1
---- !u!4 &677654687 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1051439886642557556, guid: 3754aade95215b04f90c6f35602114a5, type: 3}
-  m_PrefabInstance: {fileID: 656908156845544072}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &682761749
 GameObject:
   m_ObjectHideFlags: 0
@@ -19179,7 +19144,7 @@ MonoBehaviour:
   ResultCanvas: {fileID: 1732801352}
   UpgradeCanvas: {fileID: 1493357885}
   settingCanvas: {fileID: 918565842}
-  defaultOilTime: 30
+  defaultOilTime: 180
 --- !u!114 &1872217754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21801,7 +21766,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 210000597, guid: 3754aade95215b04f90c6f35602114a5, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 393421901106341055, guid: 3754aade95215b04f90c6f35602114a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -21826,7 +21791,7 @@ PrefabInstance:
     - target: {fileID: 919132149396027975, guid: 3754aade95215b04f90c6f35602114a5, type: 3}
       propertyPath: BucketTransform
       value: 
-      objectReference: {fileID: 210000597}
+      objectReference: {fileID: 0}
     - target: {fileID: 986434658317122408, guid: 3754aade95215b04f90c6f35602114a5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -65.36186
