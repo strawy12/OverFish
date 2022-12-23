@@ -176,4 +176,9 @@ public class GameManager : MonoSingleton<GameManager>
     {
         Application.Quit();
     }
+
+    public void ImmediatelyStop()
+    {
+        currentOilTimer = 3f;
+    }
 }

@@ -18,6 +18,9 @@ public class Aquarium : InteractionObject
     [SerializeField] private float curCleanness { get { return cleannessAmount; } set { cleannessAmount = Mathf.Clamp(value, 0f, MaxCleanness); } }
     [SerializeField] private float pollution = 1f;
     [SerializeField] private float bucketCleannessAmount = 10f;
+
+    [SerializeField] private GameObject fishPref;
+    private List<GameObject> fishbjectList;
      private float polluteDelay = 1f;
 
     public List<Fish> containFish;
@@ -27,8 +30,7 @@ public class Aquarium : InteractionObject
         base.Awake();
         HPBAR = GetComponent<HpBar>();
         containFish = new List<Fish>();
-
-
+        fishbjectList = new List<GameObject>();
     }
     protected override void Start()
     {
@@ -39,6 +41,8 @@ public class Aquarium : InteractionObject
 
     public void GameStart()
     {
+        fishbjectList.ForEach(x => Destroy(x));
+        fishbjectList.Clear();
         containFish.Clear();
         waterMaterial = waterRenderer.material;
         waterColors[0] = waterMaterial.color;
@@ -50,6 +54,14 @@ public class Aquarium : InteractionObject
         UIManager.Inst.SetAquariumText(0);
 
         StartCoroutine(Pollute());
+    }
+
+    private void CreateFishObject()
+    {
+        GameObject fish = Instantiate(fishPref, fishPref.transform.parent);
+        fish.transform.localPosition = Vector3.zero;
+        fish.gameObject.SetActive(true);
+        fishbjectList.Add(fish);
     }
 
     public IEnumerator Pollute()
@@ -146,16 +158,17 @@ public class Aquarium : InteractionObject
                     break;
                 case Bucket.CONTAIN.FISH:
                     SoundManager.Inst.TurnAudio(SoundManager.EFFECT.DECLUDINGWATER);
-                    if (DataManager.Inst.FindUpgradeData(EUpgradeDataType.AquariumFishCount).level < containFish.Count)
-                    {
-                        Debug.Log("최대 물고기");
-                        return;
-                    }
-
+                    
                     Define.CurrentPlayer.currentBucket.SetContain(Bucket.CONTAIN.NONE, null);
                     containFish.Add(AddFish());
+                    CreateFishObject();
 
                     UIManager.Inst.SetAquariumText(containFish.Count);
+
+                    if (DataManager.Inst.FindUpgradeData(EUpgradeDataType.AquariumFishCount).level <= containFish.Count)
+                    {
+                        GameManager.Inst.ImmediatelyStop();
+                    }
                     break;
                 default:
                     break;

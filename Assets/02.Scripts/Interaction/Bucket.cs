@@ -49,6 +49,14 @@ public class Bucket : InteractionObject
         SetContain(contain, null);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Water"))
+        {
+            transform.position = new Vector3(5, 7, -3);
+        }
+    }
+
     public override void TriggerInteraction()
     {
         if ((Define.CurrentPlayer.currentBucket != null && Define.CurrentPlayer.currentBucket != this) || state == STATE.INTERACTING) return;
